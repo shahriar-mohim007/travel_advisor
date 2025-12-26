@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"time"
 	"travel_advisor/pkg/config"
+	"travel_advisor/pkg/conn"
 	"travel_advisor/pkg/log"
 
 	"github.com/go-chi/chi/v5"
@@ -21,6 +22,18 @@ var (
 		Short: "Serve run Rest server on defined port on env",
 		Long:  `Serve run Rest server on defined port on env`,
 		PreRun: func(cmd *cobra.Command, args []string) {
+			fmt.Println("--------Database is connecting-------")
+			err := conn.ConnectDefaultDB()
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Info("Database connected successfully!")
+
+			log.Info("--------Connecting cache server--------")
+			if err := conn.ConnectDefaultCache(); err != nil {
+				log.Fatal(err)
+			}
+			log.Info("Cache server connected successfully!")
 
 		},
 		Run: serve,
