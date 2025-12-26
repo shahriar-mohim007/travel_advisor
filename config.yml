@@ -36,4 +36,4 @@ redis:
 
 
 app:
-  jwt_secret : "21y38712f3yfb3478gh478fg4378gf7834fg7834fg7834gf37f3478fg78"
+  jwt_secret: "21y38712f3yfb3478gh478fg4378gf7834fg7834fg7834gf37f3478fg78"
