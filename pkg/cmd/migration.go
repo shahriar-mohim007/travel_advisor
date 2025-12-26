@@ -34,9 +34,9 @@ const createUser = `CREATE TABLE IF NOT EXISTS users (
 
 var (
 	districtsMigrationCmd = &cobra.Command{
-		Use:   "districts-migration",
-		Short: "Run districts migrations",
-		Long:  `Run districts migrations`,
+		Use:   "migration",
+		Short: "Run districts and user migrations",
+		Long:  `Run districts and user migrations`,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			fmt.Println("--------Database is connecting-------")
 			err := conn.ConnectDefaultDB()
