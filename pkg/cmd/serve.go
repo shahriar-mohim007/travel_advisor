@@ -11,6 +11,11 @@ import (
 	"travel_advisor/pkg/conn"
 	"travel_advisor/pkg/log"
 
+	travelHandler "travel_advisor/travel/delivery/http"
+	travelUsecase "travel_advisor/travel/usecase"
+
+	districtRepository "travel_advisor/districts/repository"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/spf13/cobra"
@@ -76,6 +81,14 @@ func buildHTTP(cmd *cobra.Command, args []string, httpCfg config.HttpApplication
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Use(middleware.RealIP)
+
+	db := conn.DefaultDB()
+	cacher := conn.DefaultCache()
+
+	dis := districtRepository.NewDistrictPostgreSQL(db)
+	tc := travelUsecase.NewTravelUsecase(cacher, dis)
+
+	travelHandler.NewTravelHandler(r, tc)
 
 	httpPort := fmt.Sprintf(":%d", httpCfg.HTTPPort)
 	log.Println("HTTP Listening on port", httpPort)

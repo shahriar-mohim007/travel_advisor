@@ -1,0 +1,39 @@
+http_app:
+  http_port: 8080
+  verbose: true
+  read_timeout: 30 #seconds
+  write_timeout: 30 #seconds
+  idle_timeout: 30 #seconds
+  pagination_limit: 20
+
+
+postgres:
+  host: "127.0.0.1"
+  port: 5432
+  name: travel
+  username: root
+  password: secret
+  options:
+    sslmode:
+      - disable
+  max_connection_lifetime: 300
+  max_idle_connection: 10
+  max_idle_connection_lifetime: 300
+  max_open_connection: 10
+  ping_interval: 3
+
+scheduler:
+  cron_expr: "* * * * *"
+
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  prefix: travel_
+  db: 0
+  worker_db: 1
+
+
+app:
+  jwt_secret : "21y38712f3yfb3478gh478fg4378gf7834fg7834fg7834gf37f3478fg78"

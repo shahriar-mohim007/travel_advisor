@@ -1,0 +1,28 @@
+networks:
+  basic:
+    driver: bridge
+
+services:
+    postgres:
+        networks:
+          - basic
+        image: 'postgres:15.4'
+        ports:
+            - '5432:5432'
+        environment:
+            - POSTGRES_DB=travel
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=secret
+        volumes:
+            - './docker_volume/postgres:/var/lib/postgresql/data'
+        container_name: travel-postgres
+
+    redis:
+      networks:
+        - basic
+      image: 'redis:alpine'
+      ports:
+        - '6379:6379'
+      volumes:
+        - './docker_volume/redis:/data'
+      container_name: travel-redis
