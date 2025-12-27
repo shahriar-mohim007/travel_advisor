@@ -14,6 +14,10 @@ import (
 	travelHandler "travel_advisor/travel/delivery/http"
 	travelUsecase "travel_advisor/travel/usecase"
 
+	userHandler "travel_advisor/user/delivery/http"
+	userReposiotry "travel_advisor/user/repository"
+	userUsecase "travel_advisor/user/usecase"
+
 	districtRepository "travel_advisor/districts/repository"
 
 	"github.com/go-chi/chi/v5"
@@ -87,8 +91,11 @@ func buildHTTP(cmd *cobra.Command, args []string, httpCfg config.HttpApplication
 
 	dis := districtRepository.NewDistrictPostgreSQL(db)
 	tc := travelUsecase.NewTravelUsecase(cacher, dis)
+	us := userReposiotry.NewUserPostgreSQL(db)
+	uc := userUsecase.NewUserUsecase(us)
 
 	travelHandler.NewTravelHandler(r, tc)
+	userHandler.NewUserHandler(r, uc)
 
 	httpPort := fmt.Sprintf(":%d", httpCfg.HTTPPort)
 	log.Println("HTTP Listening on port", httpPort)

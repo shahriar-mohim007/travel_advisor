@@ -19,6 +19,7 @@ func NewTravelHandler(r *chi.Mux, t domain.TravelUsecase) {
 		TravelUsecase: t,
 	}
 	r.Route("/v1/travel", func(r chi.Router) {
+		r.Use(helpers.JWTAuthMiddleware)
 		r.Get("/coolest/districts", handler.List)
 		r.Post("/recommend", handler.Recommend)
 	})
