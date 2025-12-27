@@ -14,5 +14,5 @@ go run . migration
 # 3. Start background  scheduler
 go run . scheduler
 
-# 4. Launch the main API server
+# 4. Launch the main server
 go run . serve
